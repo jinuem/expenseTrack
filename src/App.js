@@ -83,11 +83,14 @@ class App extends Component {
         </form>
         {expenses.map((expense,i) => {
                                     return(
+                                      <div>
+                                        <h3>Expenses List</h3>
                                       <Expense key={i} index={i} 
                                       deleteFromApp={this.removeExpense}
                                        updateToApp={this.updateExpense} >
                                         {expense}
                                       </Expense>
+                                      </div>
                                     ) 
                           })}
       </div>
