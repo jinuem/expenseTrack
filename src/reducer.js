@@ -1,7 +1,8 @@
 export default function expenseReducer(state, action) {
-    switch(action){
-        case 'ADD_EXPESNE':
-
+    switch(action.type){
+        case 'ADD_EXPENSE':
+        let newState = state;
+        newState.expense = action.payload;
         return state
 
         default:
@@ -10,3 +11,4 @@ export default function expenseReducer(state, action) {
 
   }
 
+//export expenseReducer;
