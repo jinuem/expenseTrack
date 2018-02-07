@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {addExpense,updateExpense} from './action';
 import Expense from './Expense';
+import PieChartPage from './pieChart';
 import './App.css';
 
 export const selectValues = ['Home','Transport','Movies','Food','Entertainment','Shopping']
@@ -15,6 +16,7 @@ class App extends Component {
      this.removeExpense = this.removeExpense.bind(this);
      this.updateExpense = this.updateExpense.bind(this);
      this.addNew = this.addNew.bind(this);
+     this.piChartData = this.piChartData.bind(this);
   }
 
   handleInputChange(event) {
@@ -28,7 +30,7 @@ class App extends Component {
   }
   
   ComponentWillReceiveProps(){
-
+    this.piChartData();
 
   }
   render() {
@@ -39,27 +41,42 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Expense Tracker</h1>
         </header>
-        <form onSubmit={this.addNew}>
-        <input name="title" ref="title" required placeholder="Expense Title"></input> 
+        <div className="dataSection">
+        <form onSubmit={this.addNew} className="form-style">
+        <label>
+          Expense Title:
+          </label>
+          <input name="title" type ="text" ref="title" required ></input> 
+          
+          <label>
+           Amount:
         <input
             name="amount"
             type="number"
             ref= "amount"
-            
+            required
             //onChange={this.handleInputChange} 
             />
-             <input
+            </label>
+            <label>
+          Date:
+        <input
             name="date"
             type="date"
             ref= "date"
+            required
             />
-            <select ref ="category">
+            </label>
+            <label>
+          Category:
+            <select required ref ="category">
             {selectValues.map((value,i)=>{
               return(
                 <option key={i} value={value}>{value}</option>
               )
             })}
           </select>
+          </label>
 
         <button className="button_green" type="submit" >Add New Expense</button>
         </form>
@@ -72,12 +89,40 @@ class App extends Component {
                                       </Expense>
                                     ) 
                           })}
-
+      </div>
+      <div className="chartSection">
+      <h3>Pie Chart Section</h3>
+      <PieChartPage data={this.state.piedata}/>
+      </div>
       </div>
     );
   }
 
+  piChartData (){
+    let expenses = this.props.expenses;
+    let CategoryTotal = {};
+    expenses.map((expense,i)=>{
+      selectValues.map((category,i)=>{
+        if(!CategoryTotal[category] ){
+          CategoryTotal[category] = {};
+          CategoryTotal[category].value =0;
+        }
+        if(category === expense.category)
+        CategoryTotal[category].value = CategoryTotal[category].value + expense.amount;
+        CategoryTotal[category].label = category;
+        return;
+      })
+      return;
+    })
 
+  //console.log(CategoryTotal);
+  let piechartData= []
+
+    piechartData = Object.values(CategoryTotal)
+  
+  console.log(piechartData);
+  this.setState({piedata:piechartData});
+  }
   removeExpense(i){
     let expCopy = this.props.expenses;
     expCopy.splice(i,1);
@@ -102,16 +147,17 @@ class App extends Component {
             let newExp =  {};
             newExp.title =   this.refs.title.value;
             this.refs.title.value = '';
-            newExp.amount = this.refs.amount.value;
+            newExp.amount = parseInt(this.refs.amount.value);
             this.refs.amount.value = '';
             newExp.category = this.refs.category.value;
-            this.refs.category.value = '';
+            this.refs.category.value = selectValues[0];
             newExp.date = this.refs.date.value;
             this.refs.date.value = '';
             this.props.addExpense(newExp);
             let expCopy = this.state.expenses;
             expCopy.push(newExp);
             this.setState({expenses:expCopy})
+            this.piChartData();
   }
 }
 

@@ -23,7 +23,7 @@ class Expense extends Component {
     let updateExp = {};
     updateExp.title =   this.refs.title.value;
 
-    updateExp.amount = this.refs.amount.value;
+    updateExp.amount = parseInt(this.refs.amount.value);
     
     updateExp.category = this.refs.category.value;
  
@@ -33,7 +33,7 @@ class Expense extends Component {
 
   editingMode(){
               return (
-      <div className="expenseContainer">
+      <div className="expenseContainer" className="form-style">
         <input type="text" ref="title"  defaultValue={this.props.children.title}></input> 
         <input type="number" ref="amount"  defaultValue={this.props.children.amount}></input> 
         <input type="date" ref="date"  defaultValue={this.props.children.date}></input> 
