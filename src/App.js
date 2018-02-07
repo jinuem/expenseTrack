@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {addExpense,updateExpense} from './action';
 import Expense from './Expense';
 import PieChartPage from './pieChart';
+import BarChart from './barChart'
 import './App.css';
 
 export const selectValues = ['Home','Transport','Movies','Food','Entertainment','Shopping']
@@ -21,7 +22,6 @@ class App extends Component {
 
   handleInputChange(event) {
     const target = event.target;
-    //const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
     this.setState({
@@ -93,6 +93,8 @@ class App extends Component {
       <div className="chartSection">
       <h3>Pie Chart Section</h3>
       <PieChartPage data={this.state.piedata}/>
+      <h3>Bar Chart section</h3>
+      <BarChart/>
       </div>
       </div>
     );

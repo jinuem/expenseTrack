@@ -1,23 +1,6 @@
 import React, { Component } from 'react';
 import {selectValues} from './App';
 var PieChart = require("react-chartjs").Pie;
-var data = [
-    {
-        value: 300,
-        label:"#F7464A",
-
-    },
-    {
-        value: 50,
-        label: "#46BFBD",
-
-    },
-    {
-        value: 100,
-        label: "#FDB45C",
-
-    }
-]
 class PieChartPage extends Component {
     
    constructor(props) {
