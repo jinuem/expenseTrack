@@ -79,6 +79,9 @@ class App extends Component {
 
 
   removeExpense(i){
+    let expCopy = this.props.expenses;
+    expCopy.splice(i,1);
+    this.props.updateExpense(expCopy);
     let expenseCopy =this.state.expenses;
     expenseCopy.splice(i,1);
     this.setState({expenses:expenseCopy})
