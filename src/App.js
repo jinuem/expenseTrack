@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {addExpense} from './action';
+import {addExpense,updateExpense} from './action';
 import Expense from './Expense';
 import './App.css';
+
+export const selectValues = ['Home','Transport','Movies','Food','Entertainment','Shopping']
 
 class App extends Component {
   constructor(props) {
@@ -52,10 +54,11 @@ class App extends Component {
             ref= "date"
             />
             <select ref ="category">
-            <option value="Home">Home</option>
-            <option value="Food">Food</option>
-            <option value="Transport">Transport</option>
-            <option value="Cinema">Cinema</option>
+            {selectValues.map((value,i)=>{
+              return(
+                <option key={i} value={value}>{value}</option>
+              )
+            })}
           </select>
 
         <button className="button_green" type="submit" >Add New Expense</button>
@@ -76,22 +79,24 @@ class App extends Component {
 
 
   removeExpense(i){
-    var expenseCopy =this.state.expense;
+    let expenseCopy =this.state.expenses;
     expenseCopy.splice(i,1);
-    this.setState({expense:expenseCopy})
+    this.setState({expenses:expenseCopy})
   }
 
-  updateExpense(updateExpense,i,id){
-
-             var expenseCopy = this.state.expense;
-             expenseCopy[i].TEXT = updateExpense;
-             this.setState({expense:expenseCopy})
+  updateExpense(updateExpense,i){
+            let expensesCopy = this.props.expenses;
+            expensesCopy[i]= updateExpense;
+            this.props.updateExpense(expensesCopy);
+             let expenseStateCopy = this.state.expenses;
+             expenseStateCopy[i] = updateExpense;
+             this.setState({expenses:expenseStateCopy})
          
     
   }
   addNew(event){
     event.preventDefault();
-            let newExp =  new Object();
+            let newExp =  {};
             newExp.title =   this.refs.title.value;
             this.refs.title.value = '';
             newExp.amount = this.refs.amount.value;
@@ -109,7 +114,8 @@ class App extends Component {
 
   
 const mapDispatchToProps = dispatch => bindActionCreators({
-  addExpense
+  addExpense,
+  updateExpense
   }, dispatch)
 
 
