@@ -130,6 +130,7 @@ class App extends Component {
     let expenseCopy =this.state.expenses;
     expenseCopy.splice(i,1);
     this.setState({expenses:expenseCopy})
+    this.piChartData();
   }
 
   updateExpense(updateExpense,i){
@@ -139,7 +140,7 @@ class App extends Component {
              let expenseStateCopy = this.state.expenses;
              expenseStateCopy[i] = updateExpense;
              this.setState({expenses:expenseStateCopy})
-         
+             this.piChartData();
     
   }
   addNew(event){
