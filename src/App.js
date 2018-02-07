@@ -81,16 +81,17 @@ class App extends Component {
 
         <button className="button_green" type="submit" >Add New Expense</button>
         </form>
+        <h3>Expenses List</h3>
         {expenses.map((expense,i) => {
                                     return(
-                                      <div>
-                                        <h3>Expenses List</h3>
+                                    
+                                        
                                       <Expense key={i} index={i} 
                                       deleteFromApp={this.removeExpense}
                                        updateToApp={this.updateExpense} >
                                         {expense}
                                       </Expense>
-                                      </div>
+                                    
                                     ) 
                           })}
       </div>
