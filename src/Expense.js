@@ -54,10 +54,10 @@ class Expense extends Component {
 
         return (
       <div className="expenseContainer">
-        <h4 className="expenseText">{this.props.children.title}</h4> 
-        <h4 className="expenseText">{this.props.children.amount}</h4> 
-        <h4 className="expenseText">{this.props.children.date}</h4> 
-        <h4 className="expenseText">{this.props.children.category}</h4> 
+        <h4 className="expenseText">Title: {this.props.children.title}</h4> 
+        <h4 className="expenseText">Amount: {this.props.children.amount}</h4> 
+        <h4 className="expenseText">Date: {this.props.children.date}</h4> 
+        <h4 className="expenseText">Category: {this.props.children.category}</h4> 
         <button onClick={this.edit} className="button_red">Edit</button> 
         <button onClick={this.remove} className="button_red">Remove</button> 
       </div>
