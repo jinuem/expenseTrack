@@ -10,7 +10,7 @@ import expenseReducer from './reducer';
 import thunk from 'redux-thunk'
 
 
-const initialState = {}
+const initialState = {expenses:[]}
 const enhancers = []
 const middleware = [
   thunk,
