@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from './logo.png';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {addExpense,updateExpense} from './action';
@@ -92,9 +92,9 @@ class App extends Component {
                           })}
       </div>
       <div className="chartSection">
-      <h3>Pie Chart Section</h3>
+      <h3>Pie Chart Section (Category)</h3>
       <PieChartPage data={this.state.piedata}/>
-      <h3>Bar Chart section</h3>
+      <h3>Bar Chart section (Date)</h3>
       <BarChart data={this.state.barData}/>
       </div>
       </div>
