@@ -7,13 +7,14 @@ import Expense from './Expense';
 import PieChartPage from './pieChart';
 import BarChart from './barChart'
 import './App.css';
+import barChart from './barChart';
 
 export const selectValues = ['Home','Transport','Movies','Food','Entertainment','Shopping']
 
 class App extends Component {
   constructor(props) {
     super(props);
-     this.state = {expenses:[]};
+     this.state = {expenses:[],piedata:[],barData:{}};
      this.removeExpense = this.removeExpense.bind(this);
      this.updateExpense = this.updateExpense.bind(this);
      this.addNew = this.addNew.bind(this);
@@ -94,7 +95,7 @@ class App extends Component {
       <h3>Pie Chart Section</h3>
       <PieChartPage data={this.state.piedata}/>
       <h3>Bar Chart section</h3>
-      <BarChart/>
+      <BarChart data={this.state.barData}/>
       </div>
       </div>
     );
@@ -124,7 +125,50 @@ class App extends Component {
   
   console.log(piechartData);
   this.setState({piedata:piechartData});
+  this.barChartData();
   }
+
+  barChartData (){
+    let expenses = this.props.expenses;
+    let DateTotal = {};
+    expenses.map((expense,i)=>{
+      let date = expense.date;
+        if(!DateTotal[date] ){
+          DateTotal[date] = {};
+          DateTotal[date].value =0;
+        }
+        if(date === expense.date)
+        DateTotal[date].value = DateTotal[date].value + expense.amount;
+        DateTotal[date].label = date;
+        return;
+      
+      return;
+    })
+
+  console.log(DateTotal);
+  let barchartData= []
+
+    barchartData = Object.values(DateTotal)
+  
+  let labels = [];
+  let amounts = [];
+
+  barchartData.forEach(element => {
+    labels.push (element.label)
+    amounts.push(element.value);
+  });
+  let barDataStructure = {};
+  barDataStructure.labels = labels;
+  barDataStructure.datasets = [];
+  let datasetStrucutre = {
+    label: "Expense Dataset",
+    data: amounts
+  };
+  barDataStructure.datasets[0]=datasetStrucutre;
+  console.log(barDataStructure)
+  this.setState({barData:barDataStructure});
+  }
+
   removeExpense(i){
     let expCopy = this.props.expenses;
     expCopy.splice(i,1);
