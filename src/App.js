@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 import './App.css';
 
 class App extends Component {
@@ -16,6 +18,14 @@ class App extends Component {
       </div>
     );
   }
-}
 
-export default App;
+}
+const mapDispatchToProps = dispatch => bindActionCreators({
+    //changePage: () => push('/about-us')
+  }, dispatch);
+  
+  const mapStateToProps = (state) => { 
+    return { expense: state.expense };
+  };
+  
+  export default connect(mapStateToProps,mapDispatchToProps)(App);
