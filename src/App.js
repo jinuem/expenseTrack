@@ -9,7 +9,7 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
-     this.state = {};
+     this.state = {expenses:[]};
      this.removeExpense = this.removeExpense.bind(this);
      this.updateExpense = this.updateExpense.bind(this);
      this.addNew = this.addNew.bind(this);
@@ -24,7 +24,11 @@ class App extends Component {
       [name]: target.value
     });
   }
+  
+  ComponentWillReceiveProps(){
 
+
+  }
   render() {
     const {expenses} = this.props;
     return (
@@ -42,13 +46,26 @@ class App extends Component {
             
             //onChange={this.handleInputChange} 
             />
+             <input
+            name="date"
+            type="date"
+            ref= "date"
+            />
+            <select ref ="category">
+            <option value="Home">Home</option>
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Cinema">Cinema</option>
+          </select>
 
         <button className="button_green" type="submit" >Add New Expense</button>
         </form>
         {expenses.map((expense,i) => {
                                     return(
-                                      <Expense key={i} index={i} expenseId={expense.ID} deleteFromApp={this.removeExpense} updateToApp={this.updateExpense} >
-                                        {expense.text}
+                                      <Expense key={i} index={i} 
+                                      deleteFromApp={this.removeExpense}
+                                       updateToApp={this.updateExpense} >
+                                        {expense}
                                       </Expense>
                                     ) 
                           })}
@@ -76,8 +93,17 @@ class App extends Component {
     event.preventDefault();
             let newExp =  new Object();
             newExp.title =   this.refs.title.value;
+            this.refs.title.value = '';
             newExp.amount = this.refs.amount.value;
+            this.refs.amount.value = '';
+            newExp.category = this.refs.category.value;
+            this.refs.category.value = '';
+            newExp.date = this.refs.date.value;
+            this.refs.date.value = '';
             this.props.addExpense(newExp);
+            let expCopy = this.state.expenses;
+            expCopy.push(newExp);
+            this.setState({expenses:expCopy})
   }
 }
 
